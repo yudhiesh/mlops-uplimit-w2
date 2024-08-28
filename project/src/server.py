@@ -11,8 +11,14 @@ app = FastAPI(
     version="0.1",
 )
 
+# TODO: Add in appropriate logging using loguru wherever you see fit
+# in order to aid with debugging issues.
 
-@serve.deployment(num_replicas=1)
+
+@serve.deployment(
+    ray_actor_options={"num_cpus": 0.2},
+    autoscaling_config={"min_replicas": 1, "max_replicas": 2},
+)
 @serve.ingress(app)
 class APIIngress:
     def __init__(self, simple_model_handle: DeploymentHandle) -> None:
@@ -20,12 +26,13 @@ class APIIngress:
 
     @app.post("/predict")
     async def predict(self, request: SimpleModelRequest):
-        results = await self.handle.predict.remote(request.review)
-        return SimpleModelRespone.model_validate(results.model_dump())
+        # TODO: Use the handle.predict which is a remote function
+        # to get the result
+        return SimpleModelRespone.model_validate(result.model_dump())
 
 
 @serve.deployment(
-    ray_actor_options={"num_cpus": 1},
+    ray_actor_options={"num_cpus": 0.2},
     autoscaling_config={"min_replicas": 1, "max_replicas": 2},
 )
 class SimpleModel:
@@ -33,8 +40,10 @@ class SimpleModel:
         self.session = Model.load_model()
 
     def predict(self, review: str) -> SimpleModelResults:
-        results = Model.predict(self.session, review=review)
-        return SimpleModelResults.model_validate(results)
+        # TODO: Use the Model.predict to get the result
+        return SimpleModelResults.model_validate(result)
 
 
-entrypoint = APIIngress.bind(SimpleModel.bind())
+entrypoint = APIIngress.bind(
+    SimpleModel.bind(),
+)

@@ -15,8 +15,11 @@ LABEL_CLASS_TO_NAME = {
 }
 
 
-WANDB_MODEL_REGISTRY_MODEL_NAME = (
-    "yudhiesh/model-registry/Drugs Review MLOps Uplimit:v1"
-)
+# TODO: Add your model name from the WANDB Model Registry
+# It should look like this
+# "yudhiesh/model-registry/Drugs Review MLOps Uplimit:v1"
+WANDB_MODEL_REGISTRY_MODEL_NAME = "ADD YOUR MODEL REGISTRY NAME"
 
+# NOTE: Ensure that you set the API Key within Github Codespaces secrets
+# in the settings page of your repository!
 WANDB_API_KEY = os.getenv("WANDB_API_KEY")

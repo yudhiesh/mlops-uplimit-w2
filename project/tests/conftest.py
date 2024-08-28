@@ -4,8 +4,6 @@ from ray import serve
 
 from src.server import APIIngress, SimpleModel
 
-# This file instantiates Ray test fixtures to reuse across multiple tests
-
 
 @pytest.fixture(scope="session")
 def ray_serve():

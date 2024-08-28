@@ -1,10 +1,12 @@
 import numpy as np
 import onnxruntime as rt
-
 import wandb
+
 from src.constants import WANDB_API_KEY, WANDB_MODEL_REGISTRY_MODEL_NAME
 
 
+# NOTE: If your implementation uses a different model do update the methods
+# load_model & predict accordingly!
 class Model:
     @classmethod
     def load_model(cls) -> rt.InferenceSession:

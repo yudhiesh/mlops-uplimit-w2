@@ -26,7 +26,12 @@ class SimpleModelRespone(BaseModel):
 
     @model_validator(mode="before")
     @classmethod
-    def find_highest_score(cls, data: dict[str, float]) -> dict[str, float]:
+    def find_highest_score(
+        cls, data: dict[str, float]
+    ) -> dict[
+        str,
+        float | str,
+    ]:
         highest_label, highest_score = max(
             data.items(),
             key=lambda item: item[1],
