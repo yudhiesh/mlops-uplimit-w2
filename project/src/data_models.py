@@ -2,6 +2,8 @@ from pydantic import BaseModel, ConfigDict, model_validator
 
 from src.constants import LABEL_CLASS_TO_NAME, SentimentLabel
 
+# NOTE: If you're using a different model ensure that you add in the Results and ModelResponse
+# Pydantic models below!
 
 class SimpleModelRequest(BaseModel):
     review: str
