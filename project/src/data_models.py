@@ -5,6 +5,7 @@ from src.constants import LABEL_CLASS_TO_NAME, SentimentLabel
 # NOTE: If you're using a different model ensure that you add in the Results and ModelResponse
 # Pydantic models below!
 
+
 class SimpleModelRequest(BaseModel):
     review: str
 
@@ -20,7 +21,7 @@ class SimpleModelResults(BaseModel):
         return {LABEL_CLASS_TO_NAME[key]: value for key, value in data.items()}
 
 
-class SimpleModelRespone(BaseModel):
+class SimpleModelResponse(BaseModel):
     label: SentimentLabel
     score: float
 
