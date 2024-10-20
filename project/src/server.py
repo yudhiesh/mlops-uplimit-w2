@@ -28,6 +28,7 @@ class APIIngress:
     async def predict(self, request: SimpleModelRequest):
         # TODO: Use the handle.predict which is a remote function
         # to get the result
+        result = await self.handle.predict.remote(request.review)
         return SimpleModelResponse.model_validate(result.model_dump())
 
 
@@ -41,6 +42,7 @@ class SimpleModel:
 
     def predict(self, review: str) -> SimpleModelResults:
         # TODO: Use the Model.predict to get the result
+        result = self.session.predict(review)
         return SimpleModelResults.model_validate(result)
 
 
