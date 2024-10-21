@@ -6,7 +6,7 @@ on:
   pull_request:  # Run on all pull requests
   push:
     branches:
-      - main  # Run when pushing to the main branch
+      - master  # Run when pushing to the main branch
 
 # Define the jobs in this workflow
 jobs:
