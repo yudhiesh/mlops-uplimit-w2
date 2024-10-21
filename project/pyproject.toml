@@ -9,7 +9,7 @@ locust = "^2.31.3"
 pytest = "^8.3.2"
 ruff = "^0.6.2"
 tox = "^4.18.0"
-ray = {extras = ["serve"], version = "^2.34.0"}
+ray = { version = "^2.37.0", extras = ["serve"] }
 numpy = "^2.1.0"
 onnxruntime = "^1.19.0"
 loguru = "^0.7.2"
