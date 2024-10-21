@@ -1,1 +1,54 @@
-# TODO: Add in Pull Request pipeline here!
+# Name of the workflow
+name: Pull Request Workflow
+
+# Define when this workflow should run
+on:
+  pull_request:  # Run on all pull requests
+  push:
+    branches:
+      - main  # Run when pushing to the main branch
+
+# Define the jobs in this workflow
+jobs:
+  # Job to lint the workflow files using actionlint
+  actionlint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4  # Check out the repository
+      - name: Download actionlint
+        # Download the actionlint tool (version 1.6.21)
+        run: bash <(curl -s https://raw.githubusercontent.com/rhysd/actionlint/main/scripts/download-actionlint.bash) 1.6.21
+        shell: bash
+      - name: Check workflow files
+        # Run actionlint to check the workflow files
+        run: ./actionlint
+        shell: bash
+
+  # Job to run tests
+  tests:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        # Set the working directory for the steps in this job
+        working-directory: ./project
+    steps:
+      - uses: actions/checkout@v4  # Check out the repository
+      - uses: ./.github/actions/python-poetry-env
+        with:
+          python-version: "3.10"  # Specify Python version
+      - run: poetry run tox  # Run tests using tox through poetry
+        env:
+          # Pass the Weights & Biases API key as an environment variable
+          WANDB_API_KEY: ${{ secrets.WANDB_API_KEY }}
+
+  # Job to run pre-commit hooks
+  pre-commit:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        # Set the working directory for the steps in this job
+        working-directory: ./project
+    steps:
+      - uses: actions/checkout@v4  # Check out the repository
+      - uses: ./.github/actions/python-poetry-env  # Set up Python and Poetry
+      - run: poetry run pre-commit run --all-files  # Run all pre-commit hooks on all files# TODO: Add in Pull Request pipeline here!
